@@ -6,29 +6,26 @@ const config = webpackMerge(webpackBase,{
   mode:'development',
   entry:{
     app:[
-      'react-hot-loader/patch',
+      'react-hot-loader/patch', // 热更新
       path.join(__dirname, '../../client/app')
     ],
   },
   devServer:{
-    host:'0.0.0.0',
-    compress:true,
-    port:'8888',
-    contentBase:path.join(__dirname, '../../dist'),
-    hot:true,
-    overlay:{
-      errors:true
+    host: '0.0.0.0',
+    compress: true,
+    port: '8888',
+    contentBase: path.join(__dirname, '../../dist'), // 在此文件夹内启动webpack devServer服务
+    hot: true, // 热更新
+    overlay: {
+      errors: true
     },
-    publicPath:'/public/',
-    historyApiFallBack: {
+    publicPath: '/public/',
+    historyApiFallback: {
       index: '/public/index.html'
-    },
-    proxy:{
-      '/api':'http://localhost:3333'
     }
   },
-  plugins:[
-    new webpack.HotModuleReplacementPlugin()
+  plugins: [
+    new webpack.HotModuleReplacementPlugin() // 热更新
   ]
 })
 module.exports = config

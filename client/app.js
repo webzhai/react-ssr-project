@@ -1,12 +1,20 @@
 import React from 'react'
 import ReactDom from 'react-dom'
-import App from './views/App.jsx'
+import App from './views/App'
 import {AppContainer} from 'react-hot-loader' // eslint-disable-line
 
 const root=document.getElementById('root');
-ReactDom.hydrate(<App/>, root);
-if(module.hot){
+
+const render  = (Component)=>{
   ReactDom.hydrate(<AppContainer>
-    <App/>
+    <Component/>
   </AppContainer>, root);
+}
+render(App)
+// 热更新
+if(module.hot){
+ module.hot.accept('./views/App',()=>{
+   const nextApp=require('./views/App').default;
+   render(nextApp)
+ })
 }
