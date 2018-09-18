@@ -42,6 +42,10 @@ module.exports={
   plugins:[
     new htmlWebpackPlugin({
       template:path.join(__dirname, '../../client/template.html')
+    }),
+    new htmlWebpackPlugin({
+      template:'!!ejs-compiled-loader!'+path.join(__dirname, '../../client/server.template.ejs'),
+      filename:'server.ejs'
     })
   ],
   resolve:{
