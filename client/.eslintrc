@@ -19,6 +19,8 @@
     "no-param-reassign": [0],
     "react/jsx-tag-spacing": [0],
     "import/extensions": [0],
-    "space-infix-ops": [0]
+    "space-infix-ops": [0],
+    "object-curly-spacing": [0],
+    "padded-blocks": [0]
   }
 }

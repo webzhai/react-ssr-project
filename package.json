@@ -4,15 +4,22 @@
   "description": "reactssr react16 mobx react-route4 webpack4 babel7",
   "main": "index.js",
   "dependencies": {
+    "antd": "^3.9.2",
     "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
     "ejs": "^2.6.1",
     "ejs-compiled-loader": "^1.1.0",
     "express": "^4.16.3",
     "http-proxy-middleware": "^0.19.0",
     "lodash": "^4.17.11",
+    "mobx": "^5.1.2",
+    "mobx-react": "^5.2.8",
     "module-alias": "^2.1.0",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "serialize-javascript": "^1.5.0",
     "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
@@ -51,8 +58,11 @@
     "build:server": "cross-env NODE_ENV=development webpack --config ./webpack/server/webpackProdConfig.js",
     "dev:client": "cross-env NODE_ENV=development webpack-dev-server --config ./webpack/client/webpackDevConfig.js",
     "dev:server": "nodemon ./server/server.js",
-    "dev": "npm run dev:client & npm run dev:server",
-    "clear": "rimraf dist"
+    "clear": "rimraf dist",
+    "lint": "eslint .",
+    "fix": "eslint --fix .",
+    "dev": "npm-run-all -p -l fix dev:*",
+    "build": "npm-run-all -s -l clear build:client build:server"
   },
   "repository": {
     "type": "git",

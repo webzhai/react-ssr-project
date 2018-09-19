@@ -1,9 +1,12 @@
 import React, {Component} from 'react'
+
 export default class App extends Component {
-  componentDidMount(){
-    //do something here
+
+  componentDidMount() {
+    // do something here
   }
-  render(){
+
+  render() {
     return <div>this is App?</div>
   }
 }
