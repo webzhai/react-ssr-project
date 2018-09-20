@@ -6,7 +6,6 @@ const ReactSSR = require('react-dom/server')
 const ReactViews = require('express-react-views')
 const app = express()
 const isDev = process.env.NODE_ENV === 'development'
-
 // 处理浏览器发起的favicon请求
 app.use(favicon(path.join(__dirname, '../favicon.ico')))
 app.set('views', `${__dirname}/views`);

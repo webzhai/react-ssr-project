@@ -77,16 +77,16 @@ const DefaultLayout = (props) => {
   // });
 
   const globals = `
-    window.__INITIAL__STATE = "${props.initialState}";
+    // window.__INITIAL__STATE = "${props.initialState}";
   `;
 
   return (
     <html lang="zh">
     <head>
       <meta name="viewport"
-            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-      <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <title>{props.title}</title>
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+      {/*<title>{props.title}</title>*/}
 
       <style dangerouslySetInnerHTML={{ __html: globalStyles }} />
 
@@ -102,14 +102,14 @@ const DefaultLayout = (props) => {
       {/*<script type="text/javascript" charSet="utf-8" src={assetsManifest.runtime.js} />*/}
       {/*<script type="text/javascript" charSet="unpmnntf-8" src={assetsManifest.vendor.js} />*/}
       {/*<script type="text/javascript" charSet="utf-8" src={assetsManifest?.commons?.js} />*/}
-      <script type="text/javascript" charSet="utf-8" src={assetsManifest.index.js} />
+      {/*<script type="text/javascript" charSet="utf-8" src={assetsManifest.index.js} />*/}
     </head>
     <body>
     <div id="root" style={{ height: '100%' }}>
       <div className="loader-container">
         <div className="loader">加载中...</div>
       </div>
-      {props.children}
+      {/*{props.children}*/}
     </div>
     {/*{scriptElements}*/}
     </body>
