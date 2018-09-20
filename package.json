@@ -10,6 +10,7 @@
     "ejs": "^2.6.1",
     "ejs-compiled-loader": "^1.1.0",
     "express": "^4.16.3",
+    "express-react-views": "^0.10.5",
     "express-session": "^1.15.6",
     "http-proxy-middleware": "^0.19.0",
     "lodash": "^4.17.11",

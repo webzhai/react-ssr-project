@@ -1,21 +1,27 @@
 const path = require('path')
+const webpack = require('webpack')
 const nodeExternals = require('webpack-node-externals')
 const moduleAlias = require('module-alias')
 const _ = require('lodash')
 const pkg = require('../../package')
 
 moduleAlias()
+
+const GLOBALS = {
+  ENV_IS_DEV: process.env.NODE_ENV ==='development',
+  ENV_IS_NODE: true,
+}
 module.exports = {
   target: 'node',
   entry: {
-    app: path.join(__dirname, '../../client/server-entry.js')
+    index: path.join(__dirname, '../../client/views/pages/Index')
   },
   externals: [nodeExternals()],
   output: {
-    path: path.join(__dirname, '../../dist'),
-    filename: 'server-entry.js',
+    path: path.join(__dirname, '../../dist/server'),
+    filename: 'scripts/[name].js',
     libraryTarget: 'commonjs2',
-    publicPath: '/public/'
+    publicPath: '/public/server'
   },
   module: {
     rules: [
@@ -32,6 +38,9 @@ module.exports = {
       }
     ]
   },
+  plugins:[
+    new webpack.DefinePlugin(GLOBALS)
+  ],
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: _.merge(pkg._moduleAliases)

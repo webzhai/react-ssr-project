@@ -5,9 +5,9 @@ const webpackBase = require('./webpackBaseConfig')
 const config = webpackMerge(webpackBase, {
   mode: 'development',
   entry: {
-    app: [
+    index: [
       'react-hot-loader/patch', // 热更新
-      path.join(__dirname, '../../client/app')
+      path.join(__dirname, '../../client/views/pages/Index')
     ]
   },
   // 开发环境webpack将客户端资源打包进内存以便热更新
@@ -20,12 +20,12 @@ const config = webpackMerge(webpackBase, {
     overlay: {
       errors: true // 打包出现错误时浏览器浮层提示错误
     },
-    // devServer服务在host:port/public/下提供，
+    // devServer服务在host:port/publicPath/下提供，
     // 与webpackBaseConfig中配置的publicPath保持一致以便能正确拿到静态资源
-    publicPath: '/public/',
+    publicPath: '/public/client',
     // 错误请求退回到index
     historyApiFallback: {
-      index: '/public/index.html'
+      index: '/public/client/index.html'
     }
   },
   plugins: [

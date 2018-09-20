@@ -21,15 +21,19 @@ const getTemplate = () => {
 // 将从内存中获取的服务端打包输出文件转换为js模块
 const NativeModule = require('module')
 const vm = require('vm')
-// `(function(exports, require, module, __finename, __dirname){ ...bundle code })`
+
 const getModuleFromString = (bundle, filename) => {
   const m = { exports: {} }
+  // NativeModule.wrap(bundle)包装结果为一下字符串
+  // `(function(exports, require, module, __finename, __dirname){ ...bundle code })`
   const wrapper = NativeModule.wrap(bundle)
+  // vm模块将其解析为js模块并执行
   const script = new vm.Script(wrapper, {
     filename: filename,
     displayErrors: true
   })
   const result = script.runInThisContext()
+  // m.exports调用result并将全局环境的require传入
   result.call(m.exports, m.exports, require, m)
   return m
 }
