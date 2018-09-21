@@ -8,7 +8,7 @@ import { BrowserRouter, StaticRouter } from 'react-router-dom'
 import stores from '@client/stores/indexStore'
 import Routes from '@client/routes/index'
 
-class Index extends Component {
+class Test extends Component {
 
   componentDidMount() {
     // do something here
@@ -39,7 +39,7 @@ const clientRender=()=>{
       </AppContainer>, root,
     );
   }
-  render(Index)
+  render(Test)
 // 热更新
   if (module.hot && ENV_IS_DEV) {
     module.hot.accept()
@@ -48,13 +48,13 @@ const clientRender=()=>{
 const serverRender=()=>{
   const renderSSR = (Component) => {
     return (
-        <Provider {...stores}>
-          <StaticRouter>
-            <Component/>
-          </StaticRouter>
-        </Provider>
+      <Provider {...stores}>
+        <StaticRouter>
+          <Component/>
+        </StaticRouter>
+      </Provider>
     );
   }
-  return renderSSR(Index)
+  return renderSSR(Test)
 }
 export default ENV_IS_NODE ? serverRender() : clientRender();

@@ -4,7 +4,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const moduleAlias = require('module-alias')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const _ = require('lodash')
-const listEntries = require('../utils')
 const pkg = require('../../package')
 
 moduleAlias()
@@ -13,8 +12,6 @@ const GLOBALS = {
   ENV_IS_DEV: process.env.NODE_ENV ==='development',
   ENV_IS_NODE: false,
 };
-// const entryRoot = path.join(baseDir, 'scripts/pages');
-// const normalEntries = listEntries(entryRoot);
 
 module.exports = {
   target: 'web',
@@ -60,8 +57,8 @@ module.exports = {
       filename: 'server.ejs'
     }),
     new ManifestPlugin({
-      filename:'assetsMainfest.json',
-      filepath:'',
+      fileName:'assetsMainfest.json',
+      // filepath:'',
       // basePath:'/test/' // 所有文件引用的路径前缀。用于在清单中包含输出路径。
       // publicPath:'/test2/' //仅用于输出文件的路径前缀，类似于Webpack的output.publicPath。如果还提供了basePath，则忽略
       // writeToFileEmit: true, //用于内存开发环境

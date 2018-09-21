@@ -3,14 +3,15 @@ const axios = require('axios')
 const proxy = require('http-proxy-middleware')
 const MemoryFs = require('memory-fs')
 const webpack = require('webpack')
+const React = require('react')
 const ejs = require('ejs')
 const ReactSSR = require('react-dom/server')
 const serverConfig = require('../../webpack/server/webpackDevConfig')
 
-// 从内存中获取客户端编译后模板
-const getTemplate = () => {
+// 从内存中获取客户端编译后mainfest
+const getMainfest = () => {
   return new Promise((resolve, reject) => {
-    axios.get('http://localhost:8888/public/server.ejs')
+    axios.get('http://localhost:8888/public/client/assetsMainfest.json')
       .then((res) => {
         resolve(res.data)
       })
@@ -24,16 +25,15 @@ const vm = require('vm')
 
 const getModuleFromString = (bundle, filename) => {
   const m = { exports: {} }
-  // NativeModule.wrap(bundle)包装结果为一下字符串
+  // NativeModule.wrap(bundle)包装结果
   // `(function(exports, require, module, __finename, __dirname){ ...bundle code })`
   const wrapper = NativeModule.wrap(bundle)
-  // vm模块将其解析为js模块并执行
+  // vm模块将其解析为js模块
   const script = new vm.Script(wrapper, {
     filename: filename,
     displayErrors: true
   })
   const result = script.runInThisContext()
-  // m.exports调用result并将全局环境的require传入
   result.call(m.exports, m.exports, require, m)
   return m
 }
@@ -52,7 +52,9 @@ serverCompiler.watch({}, (err, stats) => {
     serverConfig.output.path,
     serverConfig.output.filename
   )
-  const bundle = mfs.readFileSync(bundlePath, 'utf-8')
+  console.log('bundlePath',typeof bundlePath)
+  const realPath = bundlePath.replace('[name]','index')
+  const bundle = mfs.readFileSync(realPath, 'utf-8')
   const m = getModuleFromString(bundle, 'server-entry.js')
   serverBundle = m.exports.default
 })
@@ -60,7 +62,7 @@ serverCompiler.watch({}, (err, stats) => {
 module.exports = function (app) {
   // 将指向静态文件夹public的请求重定向到开发环境webpack(webpack-dev-server)服务器，
   // 避免所有静态资源请求都使用app.get('*')处理所导致的请求结果都为字符串html模板的问题
-  app.use('/public', proxy({
+  app.use('/public/client', proxy({
     target: 'http://localhost:8888'
   }))
 
@@ -68,11 +70,9 @@ module.exports = function (app) {
     if (!serverBundle) {
       res.send('waiting for compile , refresh later')
     }
-    getTemplate().then((template) => {
-      const content = ReactSSR.renderToString(serverBundle)
-      const html = ejs.render(template, { appString: content })
-      // res.send(template.replace('<!-- app -->',content))
-      res.send(html)
+    const children = ReactSSR.renderToString(serverBundle)
+    getMainfest().then((assetsManifest) => {
+      res.render('pages/index',{assetsManifest,children})
     }).catch(next)
   })
 }
