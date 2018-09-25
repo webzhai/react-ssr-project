@@ -52,7 +52,6 @@ serverCompiler.watch({}, (err, stats) => {
     serverConfig.output.path,
     serverConfig.output.filename
   )
-  console.log('bundlePath',typeof bundlePath)
   const realPath = bundlePath.replace('[name]','index')
   const bundle = mfs.readFileSync(realPath, 'utf-8')
   const m = getModuleFromString(bundle, 'server-entry.js')
